@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IngatKetik — Mastery Learning Informatika</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .material-rich-editor p, .learning-material p { margin: 0 0 .85rem; }
+    .material-rich-editor ul, .learning-material ul { list-style: disc; padding-left: 1.75rem; margin: .6rem 0 1rem; }
+    .material-rich-editor ol, .learning-material ol { list-style: decimal; padding-left: 1.75rem; margin: .6rem 0 1rem; }
+    .material-rich-editor li, .learning-material li { margin: .3rem 0; }
+    .material-rich-editor div, .learning-material div { margin-bottom: .5rem; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== Modern Grid UI — visual-only enhancement ===== */
+    :root {
+      --ui-ink: #172554;
+      --ui-blue: #2563eb;
+      --ui-violet: #7c3aed;
+      --ui-cyan: #06b6d4;
+      --ui-glass: rgba(255,255,255,.88);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #f7f9ff !important;
+      background-image:
+        linear-gradient(rgba(99,102,241,.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,.075) 1px, transparent 1px),
+        radial-gradient(circle at 12% 8%, rgba(34,211,238,.14), transparent 26rem),
+        radial-gradient(circle at 88% 22%, rgba(167,139,250,.16), transparent 28rem) !important;
+      background-size: 28px 28px, 28px 28px, auto, auto;
+      background-attachment: fixed;
+    }
+    header {
+      background: rgba(255,255,255,.86) !important;
+      border-color: rgba(148,163,184,.28) !important;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 8px 30px rgba(30,41,59,.045);
+    }
+    footer { background: rgba(255,255,255,.8) !important; backdrop-filter: blur(12px); }
+    #app-container { animation: pageEnter .48s cubic-bezier(.2,.75,.25,1) both; }
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #app-container .rounded-2xl, #app-container .rounded-xl {
+      transition: box-shadow .25s ease, border-color .25s ease, transform .25s ease;
+    }
+    #app-container .bg-white.rounded-2xl,
+    #app-container .bg-white.rounded-xl,
+    #app-container section.rounded-2xl {
+      box-shadow: 0 12px 35px rgba(30,41,59,.055);
+    }
+    #app-container .grid > div:hover {
+      border-color: rgba(99,102,241,.35);
+    }
+    button {
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important;
+    }
+    button:not(:disabled):hover {
+      transform: translateY(-2px);
+      filter: saturate(1.08);
+      box-shadow: 0 8px 20px rgba(37,99,235,.14);
+    }
+    button:not(:disabled):active { transform: translateY(0) scale(.98); }
+    button:disabled { cursor: not-allowed; }
+    button .btn-icon {
+      width: 1rem; height: 1rem; flex: 0 0 auto;
+      display: inline-block; vertical-align: middle;
+    }
+    button:has(.btn-icon) { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+    input, textarea, select {
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      box-shadow: 0 0 0 4px rgba(99,102,241,.12) !important;
+    }
+    .sim-item { transition: transform .25s ease, box-shadow .25s ease; }
+    .sim-item:hover { box-shadow: 0 5px 14px rgba(79,70,229,.12); }
+    @keyframes gentleFloat { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-5px) } }
+    header [data-lucide="book-marked"] { animation: gentleFloat 3.2s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+
+
+    /* Warna berbeda untuk setiap kartu, konsisten di semua tampilan */
+    #app-container .grid > div.rounded-2xl:nth-child(8n+1) { background:linear-gradient(145deg,#eff6ff,#dbeafe);border-color:#93c5fd; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+2) { background:linear-gradient(145deg,#faf5ff,#ede9fe);border-color:#c4b5fd; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+3) { background:linear-gradient(145deg,#ecfdf5,#d1fae5);border-color:#6ee7b7; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+4) { background:linear-gradient(145deg,#fff7ed,#ffedd5);border-color:#fdba74; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+5) { background:linear-gradient(145deg,#fff1f2,#ffe4e6);border-color:#fda4af; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+6) { background:linear-gradient(145deg,#ecfeff,#cffafe);border-color:#67e8f9; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+7) { background:linear-gradient(145deg,#fefce8,#fef9c3);border-color:#fde047; }
+    #app-container .grid > div.rounded-2xl:nth-child(8n+8) { background:linear-gradient(145deg,#fdf2f8,#fce7f3);border-color:#f9a8d4; }
+    #app-container .grid > div.rounded-2xl {border-width:1px;}
+    #app-container .grid > div.rounded-2xl:hover {transform:translateY(-3px);box-shadow:0 14px 30px rgba(30,41,59,.12);}
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- ========================================== -->
+  <!-- 1. NAVIGATION BAR                          -->
+  <!-- ========================================== -->
+  <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-2.5 rounded-xl shadow-md">
+          <i data-lucide="book-marked" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            CETAR!
+          </span>
+          <span class="hidden sm:inline-block text-xs text-slate-500 ml-2 border-l pl-2 border-slate-300">
+            Retrieval Practice • Generative Learning • Formative Feedback • Mastery Learning
+          </span>
+        </div>
+      </div>
+
+      <!-- Auth Controls Dynamic Render -->
+      <div id="nav-actions" class="flex items-center space-x-3">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER FOR VIEWS -->
+  <main id="app-container" class="flex-1 flex flex-col">
+    <!-- Dynamic views will be rendered here -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+    © 2026 CETAR — Platform Retrieval Practice, Generative Learning, Formative Feedback, dan Mastery Learning Informatika.
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT LOGIC & STATE MANAGEMENT        -->
+  <!-- ========================================== -->
+  <script>
+
+    // Ganti dengan URL deployment Web App Google Apps Script (/exec).
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwNZWC-WD3g7o3p9JhJGgg0RICzyYyutyzIRlPsDYGvO4Kz9hIW4TGOll3fFbD2H3QIkQ/exec';
+    let sessionToken = '';
+    let remoteReady = false;
+    async function api(action, data = {}) {
+      if (!/^https:\/\/script\.google\.com\/macros\/s\//.test(API_URL)) throw Error('Isi API_URL dengan URL deployment Google Apps Script terlebih dahulu.');
+      const response = await fetch(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify({action,token:sessionToken,...data}),redirect:'follow'});
+      if (!response.ok) throw Error('HTTP '+response.status);
+      const result = await response.json();
+      if (!result.ok) throw Error(result.error || 'Permintaan gagal');
+      return result.data;
+    }
+    function updateStudentProgress() {
+      if (!currentUser || currentUser.role !== 'student') return;
+      const passed = new Set(submissions.filter(x=>x.studentId===currentUser.id && x.passed).map(x=>Number(x.levelId)));
+      levels = levels.map((l,i)=>({...l,status:passed.has(Number(l.id))?'completed':(i===0 || passed.has(Number(levels[i-1]?.id)))?'available':'locked'}));
+      currentUser.progress=Math.round(passed.size/Math.max(1,levels.length)*100);
+      currentUser.attemptsCount=submissions.filter(x=>x.studentId===currentUser.id).length;
+    }
+    async function handleTokenLogin(event) {
+      event.preventDefault();
+      const form=event.currentTarget;
+      const token=form.querySelector('[name="token"]').value.trim().toUpperCase().replace(/\s+/g,'');
+      const btn=form.querySelector('button[type="submit"]');
+      btn.disabled=true; btn.textContent='Memverifikasi token...';
+      try {
+        sessionToken=token;
+        const data=await api('login');
+        currentUser=data.user;
+        levels=data.levels;
+        submissions=data.submissions;
+        students=data.students;
+        remoteReady=true;
+        if(currentUser.role==='student') updateStudentProgress();
+        navigateTo(currentUser.role==='teacher'?'teacher-dash':'student-dash');
+      } catch(err) {sessionToken='';showModalAlert('Login gagal: '+escapeHTML(err.message));}
+      finally {btn.disabled=false;btn.textContent='Masuk dengan Token';}
+    }
+    async function refreshFromDatabase() {
+      if(!remoteReady)return;
+      try {
+        const data=await api('sync');
+        levels=data.levels;submissions=data.submissions;students=data.students;
+        if(currentUser?.role==='student')updateStudentProgress();
+        renderView();
+      }catch(e){console.error('Sinkronisasi gagal:',e);}
+    }
+    async function saveLevelsRemote() {
+      if(!remoteReady)return;
+      try {await api('saveLevels',{levels});}
+      catch(e){showModalAlert('Gagal menyimpan soal ke Spreadsheet: '+escapeHTML(e.message));}
+    }
+    async function saveSubmissionRemote(record) {
+      if(!remoteReady)return;
+      try {await api('submit',{submission:record});}
+      catch(e){showModalAlert('Jawaban belum tersimpan di Spreadsheet: '+escapeHTML(e.message));}
+    }
+
+    // ------------------------------------------
+    // MOCK DATA & APP STATE
+    // ------------------------------------------
+    let currentRoute = 'home'; // 'home', 'login-student', 'login-teacher', 'student-dash', 'teacher-dash'
+    let currentUser = null;    // { role: 'student'|'teacher', name: '...', id: '...' }
+
+    const INITIAL_LEVELS = [
+      {
+        id: 1,
+        title: "Level 1 — Pengertian Struktur Data",
+        objective: "Siswa mampu menjelaskan definisi struktur data dan fungsinya dengan kata-katanya sendiri.",
+        durationMinutes: 5,
+        remediationDurationMinutes: 3,
+        status: "available", // 'locked', 'available', 'completed'
+        textMaterial: "Struktur data adalah cara menyimpan, mengorganisasi, dan mengatur data di dalam komputer agar dapat digunakan secara efisien. Dengan struktur data yang tepat, program dapat melakukan pencarian, penambahan, dan penghapusan data dengan lebih cepat. Contoh fungsi utamanya meliputi efisiensi memori, kemudahan pengelolaan data skala besar, dan penataan logika program.",
+        audioTranscript: "Struktur data adalah metode penyimpanan dan pengorganisasian data pada sistem komputer. Tujuannya adalah efisiensi pengolahan data.",
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        question: "Apa yang dimaksud dengan struktur data? Jelaskan menggunakan bahasamu sendiri dan sebutkan fungsi utamanya!",
+        criteria: {
+          mandatoryConcepts: ["menyimpan", "mengorganisasi", "komputer", "efisien"],
+          synonyms: {
+            "menyimpan": ["menampung", "menaruh", "memuat"],
+            "mengorganisasi": ["mengatur", "menata", "mengelola", "mengelompokkan"],
+            "efisien": ["cepat", "hemat memori", "optimal"]
+          },
+          minScore: 75,
+          rubricHint: "Jawaban harus mencakup esensi pengorganisasian data dan manfaat efisiensinya."
+        },
+        remediationMaterial: "Ingat kembali: Struktur data BUKAN sekadar data biasa, melainkan CARA MENATA data di memori komputer agar algoritma bisa bekerja efisien dan cepat."
+      },
+      {
+        id: 2,
+        title: "Level 2 — Jenis Struktur Data",
+        objective: "Siswa mampu membedakan struktur data linear seperti Array, Linked List, Stack, dan Queue.",
+        durationMinutes: 5,
+        remediationDurationMinutes: 3,
+        status: "locked",
+        textMaterial: "Struktur data terbagi menjadi linear dan non-linear. Contoh struktur data linear:\n1. Array: Elemen disimpan berurutan dengan indeks.\n2. Stack (Tumpukan): Menerapkan prinsip LIFO (Last In First Out), seperti tumpukan piring.\n3. Queue (Antrean): Menerapkan prinsip FIFO (First In First Out), seperti antrean kasir.",
+        audioTranscript: "Stack menerapkan prinsip LIFO, sedangkan Queue menerapkan prinsip FIFO.",
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        question: "Bandingkan perbedaan utama antara Stack dan Queue beserta prinsip kerja masing-masing!",
+        criteria: {
+          mandatoryConcepts: ["stack", "queue", "lifo", "fifo"],
+          synonyms: {
+            "lifo": ["last in first out", "terakhir masuk pertama keluar"],
+            "fifo": ["first in first out", "pertama masuk pertama keluar"]
+          },
+          minScore: 80,
+          rubricHint: "Harus menyebutkan LIFO untuk Stack dan FIFO untuk Queue."
+        },
+        remediationMaterial: "Stack seperti tumpukan buku (LIFO). Queue seperti antrean tiket (FIFO)."
+      },
+      {
+        id: 3,
+        title: "Level 3 — Cara Kerja Operasi Data",
+        objective: "Siswa mampu memprediksi hasil operasi Push/Pop pada Stack dan Enqueue/Dequeue pada Queue.",
+        durationMinutes: 6,
+        remediationDurationMinutes: 3,
+        status: "locked",
+        textMaterial: "Operasi dasar Stack: Push (menambah data ke atas) dan Pop (mengambil data teratas). Operasi Queue: Enqueue (masuk dari belakang) dan Dequeue (keluar dari depan). Contoh: Jika kita Push(A), Push(B), lalu Pop(), maka yang keluar adalah B.",
+        audioTranscript: "Push memasukkan data ke Stack, Pop mengambil data teratas.",
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        question: "Jika dilakukan operasi Push(X), Push(Y), Push(Z) lalu Pop() dua kali pada Stack kosong, elemen apa yang tersisa di Stack?",
+        criteria: {
+          mandatoryConcepts: ["x", "tersisa"],
+          synonyms: {},
+          minScore: 80,
+          rubricHint: "Jawaban benar adalah X."
+        },
+        remediationMaterial: "Push X, Y, Z -> Stack: [X, Y, Z]. Pop 1 kali mengeluarkan Z. Pop 2 kali mengeluarkan Y. Sisa: X."
+      },
+      {
+        id: 4,
+        title: "Level 4 — Penerapan Struktur Data",
+        objective: "Siswa mampu memilih struktur data yang tepat untuk kasus nyata.",
+        durationMinutes: 5,
+        remediationDurationMinutes: 3,
+        status: "locked",
+        textMaterial: "Pemilihan struktur data menentukan kinerja aplikasi. Fitur 'Undo' pada text editor menggunakan Stack. Sistem cetak printer menggunakan Queue. Pencarian rute Google Maps menggunakan Graph.",
+        audioTranscript: "Undo menggunakan Stack karena membatalkan tindakan terakhir.",
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        question: "Struktur data apa yang paling cocok untuk membuat fitur 'Undo/Redo' pada aplikasi edit teks? Berikan alasannya!",
+        criteria: {
+          mandatoryConcepts: ["stack", "lifo", "terakhir"],
+          synonyms: { "stack": ["tumpukan"] },
+          minScore: 80,
+          rubricHint: "Menyebutkan Stack karena riwayat tindakan terakhir harus dibatalkan terlebih dahulu."
+        },
+        remediationMaterial: "Tindakan paling baru adalah yang pertama kali dibatalkan saat menekan Undo. Ini sesuai prinsip LIFO pada Stack."
+      }
+    ];
+
+    // Data disimpan di browser agar perubahan soal dan jawaban tetap ada setelah halaman dimuat ulang.
+    const STORAGE_LEVELS = 'ingatketik_levels_v2';
+    const STORAGE_SUBMISSIONS = 'ingatketik_submissions_v2';
+    let levels = (() => {
+      try { const saved = JSON.parse(localStorage.getItem(STORAGE_LEVELS)); return Array.isArray(saved) && saved.length ? saved : [...INITIAL_LEVELS]; }
+      catch (_) { return [...INITIAL_LEVELS]; }
+    })();
+    let submissions = (() => {
+      try { const saved = JSON.parse(localStorage.getItem(STORAGE_SUBMISSIONS)); return Array.isArray(saved) ? saved : []; }
+      catch (_) { return []; }
+    })();
+    function persistLevels() { saveLevelsRemote(); }
+    function persistSubmissions() { const latest=submissions[submissions.length-1]; if(latest)saveSubmissionRemote(latest); }
+    let students = [
+      { id: "S001", name: "Andi Pratama", class: "X RPL 1", progress: 25, currentLevel: 1, attemptsCount: 3 },
+      { id: "S002", name: "Siti Rahma", class: "X RPL 1", progress: 75, currentLevel: 3, attemptsCount: 5 },
+      { id: "S003", name: "Budi Santoso", class: "X RPL 2", progress: 0, currentLevel: 1, attemptsCount: 0 }
+    ];
+
+    // Session State
+    let activeLevel = null;
+    let learningStage = 1; // 1: Select Format, 2: Studying, 3: Answering, 4: Remediation
+    let selectedFormat = 'text';
+    let timerInterval = null;
+    let timeLeft = 0;
+    let answerInputText = '';
+    let isEvaluating = false;
+    let evalResult = null;
+    let attemptCountForLevel = 0;
+
+    // Speech Recognition
+    let recognition = null;
+    let isListening = false;
+    let speechBaseText = '';
+
+    // ------------------------------------------
+    // SPEECH RECOGNITION INITIALIZATION
+    // ------------------------------------------
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'id-ID';
+
+      recognition.onresult = (event) => {
+        // Bangun ulang seluruh hasil dari sesi ini; interim tidak boleh ditambahkan berulang.
+        const transcript = Array.from(event.results).map(r => r[0].transcript.trim()).filter(Boolean).join(' ');
+        const inputElem = document.getElementById('answer-textarea');
+        if (inputElem) {
+          answerInputText = [speechBaseText, transcript].filter(Boolean).join(' ').trim();
+          inputElem.value = answerInputText;
+          updateCharCount();
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Speech error:", event.error);
+        isListening = false;
+        updateSpeechBtnUI();
+      };
+
+      recognition.onend = () => {
+        isListening = false;
+        updateSpeechBtnUI();
+      };
+    }
+
+    function toggleSpeechRecognition() {
+      if (!recognition) {
+        showModalAlert("Browser Anda tidak mendukung fitur Pengenal Suara (Speech-to-Text). Gunakan Chrome!");
+        return;
+      }
+      if (isListening) {
+        recognition.stop();
+        isListening = false;
+      } else {
+        try {
+          speechBaseText = document.getElementById('answer-textarea')?.value.trim() || answerInputText.trim();
+          recognition.start();
+          isListening = true;
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      updateSpeechBtnUI();
+    }
+
+    function updateSpeechBtnUI() {
+      const btn = document.getElementById('speech-btn');
+      if (btn) {
+        if (isListening) {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 bg-rose-500 text-white animate-pulse";
+          btn.innerHTML = `<i data-lucide="mic-off" class="w-3.5 h-3.5"></i> <span>Merekam... (Klik Berhenti)</span>`;
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 bg-slate-200 text-slate-700 hover:bg-slate-300 transition";
+          btn.innerHTML = `<i data-lucide="mic" class="w-3.5 h-3.5"></i> <span>Input Suara (Speech-to-Text)</span>`;
+        }
+        lucide.createIcons();
+      }
+    }
+
+    // Speech Synthesis
+    function speakText(text) {
+      // Narasi mengikuti materi teks lengkap, termasuk bagian-bagian dan urutannya.
+      text = String(text || "").replace(/\n+/g, ". ").replace(/\s+/g, " ").trim();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'id-ID';
+        utterance.rate = 0.92;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        showModalAlert("Fitur pemutar suara tidak didukung browser ini.");
+      }
+    }
+
+    // Custom Modal Alert (Replaces alert)
+    function showModalAlert(message) {
+      const modal = document.createElement('div');
+      modal.className = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 animate-fade-in";
+      modal.innerHTML = `
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-xl">
+          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="info" class="w-6 h-6"></i>
+          </div>
+          <p class="text-sm font-medium text-slate-800 mb-6">${message}</p>
+          <button onclick="this.closest('.fixed').remove()" class="w-full py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-xl hover:bg-blue-700">Tutup</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      lucide.createIcons();
+    }
+
+    // ------------------------------------------
+    // TIMER UTILITIES
+    // ------------------------------------------
+    function startTimer(seconds, onExpire) {
+      clearInterval(timerInterval);
+      timeLeft = seconds;
+      updateTimerDisplay();
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          if (onExpire) onExpire();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateTimerDisplay() {
+      const elem = document.getElementById('timer-display');
+      if (elem) {
+        elem.innerText = formatTime(timeLeft);
+      }
+    }
+
+    // ------------------------------------------
+    // ROUTING & CONTROLLERS
+    // ------------------------------------------
+    function navigateTo(route) {
+      currentRoute = route;
+      renderNav();
+      renderView();
+    }
+
+    function handleStudentLogin(e) { return handleTokenLogin(e); }
+    function handleTeacherLogin(e) { return handleTokenLogin(e); }
+
+    function logout() {
+      currentUser = null;
+      sessionToken = ''; remoteReady = false;
+      activeLevel = null;
+      stopTimer();
+      navigateTo('home');
+    }
+
+    // ------------------------------------------
+    // RENDER LOGIC
+    // ------------------------------------------
+    function renderNav() {
+      const navActions = document.getElementById('nav-actions');
+      if (!currentUser) {
+        navActions.innerHTML = `
+          <button onclick="navigateTo('login-student')" class="px-4 py-2 text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition">
+            Masuk Murid
+          </button>
+          <button onclick="navigateTo('login-teacher')" class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition">
+            Masuk Guru
+          </button>
+        `;
+      } else {
+        navActions.innerHTML = `
+          <span class="text-sm font-semibold text-slate-700 hidden sm:inline">${currentUser.name}</span>
+          <button onclick="logout()" class="p-2 text-slate-500 hover:text-red-600 rounded-lg hover:bg-slate-100 transition" title="Keluar">
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+          </button>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    function renderView() {
+      const container = document.getElementById('app-container');
+
+      // 1. HOME LANDING PAGE
+      if (currentRoute === 'home') {
+        container.innerHTML = `
+          <section class="py-20 bg-gradient-to-b from-blue-50 via-indigo-50/30 to-white text-center px-4">
+            <div class="max-w-4xl mx-auto">
+              <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 mb-6">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 mr-1.5"></i> Platform Retrieval Practice, Generative Learning, Formative Feedback, dan Mastery Learning Informatika
+              </span>
+              <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+                CETAR
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-middle ml-2" style="transform:rotate(25deg);">
+                  <path d="M22 43c0-6-8-9-8-19a18 18 0 0 1 36 0c0 10-8 13-8 19H22Z"/>    
+                  <path d="M24 48h16M26 53h12M29 58h6"/>
+                  <path d="M26 43V31l6 4 6-4v12"/>
+                  <path d="M32 1v5M8 9l5 5M1 27h6M56 9l-5 5M63 27h-6M8 44l5-4M56 44l-5-4"/>
+                </svg>
+                <br class="hidden sm:inline" />
+                <span class="text-4xl text-indigo-500">Cerdas, Evaluatif, Terarah, Adaptif, dan Reflektif</span>
+              </h1>
+              <p class="text-md text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed text-center">Mari berlatih mengingat materi, menjelaskan konsep dengan kata-katamu sendiri, menerima umpan balik, dan memperbaiki pemahaman hingga benar-benar menguasai setiap konsep.
+                <br><br>
+                <span style="font-family: 'Dancing Script', serif;" class="italic text-lg sm:text-2xl font-medium text-slate-900 bg-yellow-200 px-2 rounded-sm leading-relaxed">
+                  “Setiap tantangan adalah kesempatan untuk berkembang. Berani mencoba, jangan takut salah, dan terus tingkatkan kemampuanmu!”
+                </span>
+              </p>
+
+              <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="navigateTo('login-student')" class="px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-indigo-500/25 transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+                  <span>Mulai Belajar Sekarang</span>
+                  <i data-lucide="rocket" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-center text-slate-900 mb-12">Alur Pembelajaran</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+              <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                  <i data-lucide="clock" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-900 mb-2">1. Pelajari dengan Timer</h3>
+                <p class="text-slate-600 text-sm">Fokus membaca atau mendengarkan materi dalam interval waktu terukur sebelum materi disembunyikan.</p>
+              </div>
+              <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-4">
+                  <i data-lucide="mic" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-900 mb-2">2. Ketik atau Rekam Suara</h3>
+                <p class="text-slate-600 text-sm">Jelaskan kembali pemahamanmu menggunakan kata-kata sendiri melalui teks ataupun pengenal suara terintegrasi.</p>
+              </div>
+              <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4">
+                  <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-900 mb-2">3. Evaluasi & Remediasi</h3>
+                <p class="text-slate-600 text-sm">Dapatkan umpan balik kriteria konsep secara instan. Jika belum lolos, dapatkan jalur remediasi khusus.</p>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      // 2. LOGIN STUDENT
+      else if (currentRoute === 'login-student') {
+        container.innerHTML = `
+          <div class="flex-1 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 max-w-md w-full">
+              <div class="text-center mb-8">
+                <div class="inline-flex p-3 bg-blue-100 text-blue-600 rounded-xl mb-3">
+                  <i data-lucide="user-check" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Masuk sebagai Murid</h2>
+                <p class="text-sm text-slate-500 mt-1">Akses materi dan lanjutkan level pembelajaranmu</p>
+              </div>
+
+                             <form onsubmit="handleTokenLogin(event)" class="space-y-4">
+                 <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Token Login</label>
+                 <input name="token" type="text" autocomplete="off" required spellcheck="false" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm uppercase">
+                 <button type="submit" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-md hover:bg-blue-700 transition">Masuk dengan Token</button>
+               </form>
+
+              <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                <button onclick="navigateTo('home')" class="text-xs text-slate-500 hover:text-slate-700">Kembali ke Halaman Utama</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. LOGIN TEACHER
+      else if (currentRoute === 'login-teacher') {
+        container.innerHTML = `
+          <div class="flex-1 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 max-w-md w-full">
+              <div class="text-center mb-8">
+                <div class="inline-flex p-3 bg-indigo-100 text-indigo-600 rounded-xl mb-3">
+                  <i data-lucide="shield" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Masuk sebagai Guru</h2>
+                <p class="text-sm text-slate-500 mt-1">Kelola kelas, materi, dan pantau penguasaan konsep murid</p>
+              </div>
+
+                             <form onsubmit="handleTokenLogin(event)" class="space-y-4">
+                 <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Token Login</label>
+                 <input name="token" type="text" autocomplete="off" required spellcheck="false" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm uppercase">
+                 <button type="submit" class="w-full py-3 bg-indigo-600 text-white font-semibold rounded-xl shadow-md hover:bg-indigo-700 transition">Masuk dengan Token</button>
+               </form>
+
+              <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+                <button onclick="navigateTo('home')" class="text-xs text-slate-500 hover:text-slate-700">Kembali ke Halaman Utama</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. STUDENT DASHBOARD & LEARNING SESSION
+      else if (currentRoute === 'student-dash') {
+        if (activeLevel) {
+          renderActiveLearningSession(container);
+        } else {
+          renderStudentDashboard(container);
+        }
+      }
+
+      // 5. TEACHER DASHBOARD
+      else if (currentRoute.startsWith('teacher-')) {
+        if (currentUser?.role !== 'teacher') { navigateTo('home'); return; }
+        renderTeacherDashboard(container);
+      }
+
+      lucide.createIcons();
+    }
+
+    // ------------------------------------------
+    // STUDENT VIEW SUB-COMPONENTS
+    // ------------------------------------------
+    function renderStudentDashboard(container) {
+      updateStudentProgress();
+      const completedLevels = levels.filter(l => l.status === 'completed').length;
+      const progressPercent = Math.round((completedLevels / levels.length) * 100);
+
+      container.innerHTML = `
+        <div class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+          <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-6 sm:p-8 shadow-md">
+            <h1 class="text-2xl font-bold mb-2">Selamat Datang, ${currentUser.name}!</h1>
+            <p class="text-blue-100 text-sm max-w-xl mb-6">
+              Siap untuk melatih pemahaman Informatika hari ini?<br> Selesaikan level secara berurutan untuk membuka tantangan berikutnya!
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-blue-500/40 text-center">
+              <div>
+                <span class="block text-2xl font-extrabold">${progressPercent}%</span>
+                <span class="text-xs text-blue-200">Progres Belajar</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-extrabold">${completedLevels}/${levels.length}</span>
+                <span class="text-xs text-blue-200">Level Dikuasai</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-extrabold">${currentUser.class}</span>
+                <span class="text-xs text-blue-200">Kelas Aktif</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-extrabold">${currentUser.attemptsCount || 0}</span>
+                <span class="text-xs text-blue-200">Total Percobaan</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center">
+              <i data-lucide="layers" class="w-5 h-5 mr-2 text-blue-600"></i>
+              Daftar Level Pembelajaran
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              ${levels.map(lvl => {
+                const isCompleted = lvl.status === 'completed';
+                const isLocked = lvl.status === 'locked';
+
+                return `
+                  <div class="bg-white p-5 rounded-2xl border transition shadow-sm ${isLocked ? 'border-slate-200 opacity-75' : 'border-blue-100 hover:border-blue-300'}">
+                    <div class="flex items-start justify-between mb-3">
+                      <div>
+                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Level ${lvl.id}</span>
+                        <h3 class="font-bold text-slate-900">${lvl.title}</h3>
+                      </div>
+                      ${isCompleted ? '<span class="p-1.5 bg-emerald-100 text-emerald-700 rounded-full"><i data-lucide="check-circle" class="w-5 h-5"></i></span>' : ''}
+                      ${isLocked ? '<span class="p-1.5 bg-slate-100 text-slate-500 rounded-full"><i data-lucide="lock" class="w-5 h-5"></i></span>' : ''}
+                      ${!isCompleted && !isLocked ? '<span class="p-1.5 bg-blue-100 text-blue-700 rounded-full"><i data-lucide="unlock" class="w-5 h-5"></i></span>' : ''}
+                    </div>
+
+                    <p class="text-xs text-slate-600 mb-4 line-clamp-2">${lvl.objective}</p>
+
+                    <div class="flex items-center justify-between text-xs border-t border-slate-100 pt-3">
+                      <span class="text-slate-500 flex items-center">
+                        <i data-lucide="clock" class="w-3.5 h-3.5 mr-1"></i> ${lvl.durationMinutes} Menit
+                      </span>
+
+                      <button 
+                        onclick="startLevelSession(${lvl.id})"
+                        ${isLocked ? 'disabled' : ''}
+                        class="px-4 py-2 rounded-lg font-semibold text-xs transition ${isLocked ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm'}"
+                      >
+                        ${isCompleted ? 'Pelajari Ulang' : isLocked ? 'Terkunci' : 'Mulai Belajar'}
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function startLevelSession(levelId) {
+      const lvl = levels.find(l => l.id === levelId);
+      if (!lvl || lvl.status === 'locked') return;
+
+      activeLevel = lvl;
+      learningStage = 2;
+      answerInputText = '';
+      evalResult = null;
+      attemptCountForLevel = 0;
+      startStudying();
+    }
+
+    function exitLevelSession() {
+      activeLevel = null;
+      stopTimer();
+      renderView();
+    }
+
+    function renderActiveLearningSession(container) {
+      container.innerHTML = `
+        <div class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+          <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+            <!-- Header -->
+            <div class="bg-slate-900 text-white p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <span class="text-xs text-indigo-400 font-semibold tracking-wider uppercase">Sesi Belajar Aktif</span>
+                <h2 class="text-xl font-bold">${activeLevel.title}</h2>
+                <p class="text-xs text-slate-400 mt-1">${activeLevel.objective}</p>
+              </div>
+            </div>
+
+            <!-- Stage Indicator -->
+            <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
+              <span class="${learningStage === 2 ? 'text-blue-600 font-bold' : ''}">1. Materi & Simulasi</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+              <span class="${learningStage === 3 ? 'text-blue-600 font-bold' : ''}">2. Menjawab Konsep</span>
+              ${learningStage === 4 ? `
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                <span class="text-amber-600 font-bold">3. Sesi Remediasi</span>
+              ` : ''}
+            </div>
+
+            <!-- Stage Content Dynamic Render -->
+            <div id="stage-container"></div>
+          </div>
+        </div>
+      `;
+
+      const stageContainer = document.getElementById('stage-container');
+
+      // STAGE 2: Semua format materi dalam satu halaman
+      if (learningStage === 2) {
+        stageContainer.innerHTML = `
+          <div class="p-4 sm:p-6 lg:p-8">
+            <div class="flex items-center justify-between bg-blue-50 border border-blue-200 p-4 rounded-xl mb-5">
+              <div class="flex items-center space-x-3">
+                <i data-lucide="clock" class="w-5 h-5 text-blue-600 animate-pulse"></i>
+                <span class="text-sm font-semibold text-blue-900">Waktu belajar tersisa</span>
+              </div>
+              <span id="timer-display" class="text-xl font-mono font-bold text-blue-700">${formatTime(timeLeft)}</span>
+            </div>
+
+            <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 max-w-5xl mx-auto shadow-sm">
+              <div class="flex items-center gap-2 mb-4 text-blue-700"><i data-lucide="book-open" class="w-5 h-5"></i><h3 class="font-bold text-lg text-slate-900">Materi Pembelajaran</h3></div>
+              <div class="learning-material text-sm sm:text-base text-slate-700 leading-8">${materialHTML(activeLevel.textMaterial)}</div>
+              <div class="mt-6 flex flex-wrap items-center gap-3 p-4 rounded-xl bg-indigo-50 border border-indigo-100">
+                <i data-lucide="volume-2" class="w-5 h-5 text-indigo-700"></i>
+                <span class="text-sm font-semibold text-indigo-900">Dengarkan Penjelasan Materi</span>
+                <button onclick="speakText(materialPlainText(activeLevel.textMaterial))" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 inline-flex items-center gap-2"><i data-lucide="play" class="w-4 h-4"></i> Putar Narasi</button>
+                <button onclick="window.speechSynthesis && window.speechSynthesis.cancel()" class="px-3 py-2 border border-indigo-200 bg-white text-slate-700 rounded-lg text-sm">Berhenti</button>
+              </div>
+              <div class="mt-8 pt-6 border-t border-slate-200">
+                <div class="flex items-center gap-2 mb-2 text-emerald-700"><i data-lucide="boxes" class="w-5 h-5"></i><h3 class="font-bold text-slate-900">Simulasi Interaktif</h3></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div class="rounded-xl bg-violet-50/60 border border-violet-100 p-4">                <div class="mb-5">
+                   <h4 class="text-sm font-bold text-slate-800 mb-2">Array — data berindeks</h4>
+                   <p class="text-xs text-slate-600 mb-3">Tentukan kapasitas array terlebih dahulu. Indeks dimulai dari 0; klik kotak indeks untuk memilihnya.</p>
+                   <div class="flex flex-wrap items-end gap-2 mb-3">
+                     <label class="text-xs font-semibold text-slate-700">Jumlah indeks
+                       <input id="array-capacity" type="number" min="1" max="20" value="5" class="block mt-1 w-24 px-3 py-2 border border-violet-200 rounded-lg bg-white" />
+                     </label>
+                     <button onclick="setArrayCapacity()" class="px-3 py-2 rounded-lg bg-violet-600 text-white text-xs font-semibold">Buat Array</button>
+                   </div>
+                   <div id="array-visual" class="min-h-20 flex flex-wrap items-center gap-2 p-3 rounded-lg bg-white border border-violet-200">${renderArrayItems()}</div>
+                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+                     <label class="text-xs font-semibold text-slate-700">Pilih indeks
+                       <select id="array-index" onchange="selectArrayIndex(this.value)" class="block mt-1 w-full px-3 py-2 rounded-lg border border-violet-200 bg-white" disabled><option value="">Buat array dahulu</option></select>
+                     </label>
+                     <label class="text-xs font-semibold text-slate-700">Data (teks atau angka)
+                       <input id="array-value" type="text" maxlength="40" placeholder="Masukkan data" class="block mt-1 w-full px-3 py-2 rounded-lg border border-violet-200 bg-white" disabled />
+                     </label>
+                   </div>
+                   <div class="flex flex-wrap gap-2 mt-3">
+                     <button id="array-add-btn" onclick="addArrayItem()" disabled class="flex-1 px-3 py-2 rounded-lg bg-violet-600 text-white text-xs font-semibold disabled:opacity-40">Isi Indeks</button>
+                     <button id="array-edit-btn" onclick="updateArrayItem()" disabled class="flex-1 px-3 py-2 rounded-lg bg-white border border-violet-300 text-violet-800 text-xs font-semibold disabled:opacity-40">Edit Data</button>
+                     <button id="array-delete-btn" onclick="removeArrayItem()" disabled class="flex-1 px-3 py-2 rounded-lg bg-white border border-rose-300 text-rose-700 text-xs font-semibold disabled:opacity-40">Hapus Data</button>
+                   </div>
+                   <div id="array-status" role="status" class="mt-3 text-xs font-bold text-violet-800">Belum ada array</div>
+                   <p id="array-message" aria-live="polite" class="text-xs text-slate-500 mt-2">Atur jumlah indeks, lalu klik Buat Array.</p>
+                </div>
+</div>
+                  <div class="rounded-xl bg-emerald-50/60 border border-emerald-100 p-4">                <div class="mb-5">
+                  <h4 class="text-sm font-bold text-slate-800 mb-2">Stack — tumpukan</h4>
+                  <div id="stack-visual" class="min-h-28 flex flex-col-reverse items-center justify-end gap-2 p-3 rounded-lg bg-white border border-emerald-100">${renderStackItems()}</div>
+                  <div class="flex gap-2 mt-2">
+                    <button onclick="addStackItem()" class="flex-1 px-3 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700">Push</button>
+                    <button onclick="removeStackItem()" class="flex-1 px-3 py-2 rounded-lg bg-white border border-emerald-300 text-emerald-800 text-xs font-semibold hover:bg-emerald-50">Pop</button>
+                  </div>
+                  <p id="stack-message" class="text-xs text-slate-500 mt-2">Push menambah data, Pop mengambil data teratas.</p>
+                </div>
+</div>
+                  <div class="rounded-xl bg-blue-50/60 border border-blue-100 p-4 md:col-span-2">                <div>
+                  <h4 class="text-sm font-bold text-slate-800 mb-2">Queue — antrean</h4>
+                  <div id="queue-visual" class="min-h-12 flex flex-wrap items-center gap-2 p-3 rounded-lg bg-white border border-emerald-100">${renderQueueItems()}</div>
+                  <div class="flex gap-2 mt-2">
+                    <button onclick="addQueueItem()" class="flex-1 px-3 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700">Enqueue</button>
+                    <button onclick="removeQueueItem()" class="flex-1 px-3 py-2 rounded-lg bg-white border border-emerald-300 text-emerald-800 text-xs font-semibold hover:bg-emerald-50">Dequeue</button>
+                  </div>
+                  <p id="queue-message" class="text-xs text-slate-500 mt-2">Enqueue menambah dari belakang, Dequeue mengambil dari depan.</p>
+                </div>
+</div>
+                </div>
+                <button onclick="resetSimulation()" class="mt-4 text-xs font-semibold text-slate-600 hover:text-slate-900 underline">Reset simulasi</button>
+              </div>
+            </section>
+            <div class="mt-5 flex justify-end gap-3">
+              <button onclick="finishStudyingEarly()" class="px-5 py-3 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-700">
+                Lanjut Menjawab
+              </button>
+            </div>
+
+          </div>
+        `;
+      }
+
+      // STAGE 3 or 4: Answering & Remediation
+      else if (learningStage === 3 || learningStage === 4) {
+        stageContainer.innerHTML = `
+          <div class="p-6 sm:p-8">
+            ${learningStage === 4 ? `
+              <div class="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-amber-800 uppercase flex items-center">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 mr-1 text-amber-600"></i> Sesi Remediasi Aktif (<span id="timer-display">${formatTime(timeLeft)}</span>)
+                  </span>
+                </div>
+                <p class="text-sm text-amber-900 leading-relaxed mb-4">${escapeHTML(activeLevel.remediationMaterial || 'Pelajari kembali materi berikut.')}</p>
+                <div class="learning-material bg-white border border-amber-100 rounded-xl p-5 text-sm text-slate-700 leading-7">${materialHTML(activeLevel.textMaterial)}</div>
+                <button onclick="speakText(materialPlainText(activeLevel.textMaterial))" class="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-semibold">Dengarkan Materi</button>
+                <p class="mt-4 text-xs font-semibold text-amber-800">Selama remediasi, fokuslah membaca atau mendengarkan materi. Jika sudah memahami materi, klik tombol Lanjut Menjawab tanpa harus menunggu timer selesai.</p>
+                <button type="button" onclick="finishRemediationEarly()" class="mt-4 px-5 py-3 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-xl">Lanjut Menjawab</button>
+              </div>
+            ` : ''}
+
+            ${learningStage === 3 ? `
+            <div class="mb-6">
+              <div class="flex items-center space-x-2 text-xs font-semibold text-slate-500 mb-2">
+                <i data-lucide="eye-off" class="w-4 h-4 text-rose-500"></i>
+                <span>Apa yang kamu pahami mengenai:</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 bg-slate-50 p-4 rounded-xl border border-slate-200" style="text-align: justify; line-height: 1.6;">
+                ${activeLevel.question}
+              </h3>
+            </div>
+
+            <div class="space-y-4 mb-6">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-semibold text-slate-700 uppercase">Jawaban:</label>
+                <button id="speech-btn" onclick="toggleSpeechRecognition()" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 bg-slate-200 text-slate-700 hover:bg-slate-300 transition">
+                  <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                  <span>Input Suara (Speech-to-Text)</span>
+                </button>
+              </div>
+
+              <textarea id="answer-textarea" rows="5" oninput="handleTextareaChange(this)" onpaste="blockAnswerClipboard(event)" ondrop="blockAnswerClipboard(event)" onbeforeinput="blockAnswerInsert(event)" placeholder="Tuliskan penjelasan lengkap Anda di sini..." class="w-full p-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm text-slate-800">${answerInputText}</textarea>
+
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span id="char-count">Jumlah karakter: ${answerInputText.length}</span>
+              </div>
+            </div>
+
+            <div id="eval-result-box">
+              ${evalResult ? renderEvalBox() : ''}
+            </div>
+
+            <div class="flex justify-end space-x-3">
+              <button onclick="submitAnswer()" id="submit-btn" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition">
+                Kirim Jawaban
+              </button>
+              <button onclick="exitLevelSession()" class="text-xs px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700">
+                Keluar ke Dashboard
+              </button>
+            </div>
+            ` : ''}
+          </div>
+        `;
+      }
+    }
+
+    // Simulasi animasi Array, Stack, Queue
+     let arrayItems = [], stackItems = [], queueItems = [];
+     let arrayCapacity = 0, selectedArrayIndex = 0;
+     let simulationCounter = 1;
+     const nextSimulationValue = () => String.fromCharCode(65 + ((simulationCounter++ - 1) % 26));
+     function renderArrayItems() {
+       if (!arrayCapacity) return '<span class="text-xs text-slate-400">Tentukan jumlah indeks untuk memulai.</span>';
+       return arrayItems.map((v,i) => `<button type="button" onclick="selectArrayIndex(${i})" class="sim-item flex flex-col items-center gap-1 p-1.5 rounded-lg border-2 transition ${selectedArrayIndex===i?'border-violet-600 bg-violet-50':'border-transparent hover:border-violet-200'}" title="Pilih indeks ${i}"><span class="text-[10px] font-bold text-slate-500">[${i}]</span><span class="min-w-12 max-w-28 truncate px-3 py-2 rounded-md ${v===null?'bg-slate-50 border-dashed border-slate-300 text-slate-400':'bg-violet-100 border-violet-300 text-violet-900'} border text-xs font-bold">${v===null?'Kosong':escapeHTML(v)}</span></button>`).join('');
+     }
+     function setArrayCapacity() {
+       const input=document.getElementById('array-capacity');
+       const n=Number(input?.value);
+       if(!Number.isInteger(n)||n<1||n>20) return simMessage('array-message','Jumlah indeks harus bilangan bulat antara 1 sampai 20.');
+       if(arrayCapacity && arrayItems.some(v=>v!==null) && !confirm('Membuat array baru akan menghapus seluruh data array sebelumnya. Lanjutkan?')) return;
+       arrayCapacity=n; arrayItems=Array(n).fill(null); selectedArrayIndex=0;
+       refreshArrayUI(); simMessage('array-message',`Array dengan ${n} indeks dibuat. Pilih indeks 0–${n-1}, lalu masukkan data.`);
+     }
+     function selectArrayIndex(index) {
+       const i=Number(index);
+       if(!Number.isInteger(i)||i<0||i>=arrayCapacity) return;
+       selectedArrayIndex=i;
+       refreshArrayUI();
+       const input=document.getElementById('array-value');
+       if(input) {input.value=arrayItems[i]??''; input.focus();}
+     }
+     function refreshArrayUI(kind='update', index=selectedArrayIndex) {
+       animateSimulation('array-visual',renderArrayItems(),kind,index);
+       const select=document.getElementById('array-index');
+       if(select){select.disabled=!arrayCapacity;select.innerHTML=arrayCapacity?arrayItems.map((v,i)=>`<option value="${i}" ${i===selectedArrayIndex?'selected':''}>Indeks ${i} — ${v===null?'Kosong':'Terisi'}</option>`).join(''):'<option value="">Buat array dahulu</option>';}
+       const input=document.getElementById('array-value');if(input)input.disabled=!arrayCapacity;
+       const exists=arrayCapacity>0 && arrayItems[selectedArrayIndex]!==null;
+       for(const [id,enabled] of [['array-add-btn',arrayCapacity>0&&!exists],['array-edit-btn',exists],['array-delete-btn',exists]]) {const el=document.getElementById(id);if(el)el.disabled=!enabled;}
+       const used=arrayItems.filter(v=>v!==null).length;
+       const status=document.getElementById('array-status');
+       if(status){status.textContent=arrayCapacity?(used===arrayCapacity?`INDEKS PENUH (FULL) — ${used}/${arrayCapacity} terisi`:`${used}/${arrayCapacity} indeks terisi • ${arrayCapacity-used} kosong`):'Belum ada array';status.className=`mt-3 text-xs font-bold ${arrayCapacity&&used===arrayCapacity?'text-rose-700':'text-violet-800'}`;}
+     }
+     function arrayInputValue(){return document.getElementById('array-value')?.value.trim()??'';}
+    function renderStackItems() {
+      return stackItems.length ? stackItems.map((v,i) => `<span class="sim-item w-28 text-center px-3 py-2 rounded-md bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-bold">${escapeHTML(v)}${i === stackItems.length-1 ? ' ↑ PUNCAK' : ''}</span>`).join('') : '<span class="text-xs text-slate-400">Stack kosong</span>';
+    }
+    function renderQueueItems() {
+      return queueItems.length ? '<span class="text-[10px] text-slate-500">DEPAN →</span>' + queueItems.map(v => `<span class="sim-item px-3 py-2 rounded-md bg-blue-100 border border-blue-300 text-blue-900 text-xs font-bold">${escapeHTML(v)}</span>`).join('') + '<span class="text-[10px] text-slate-500">← BELAKANG</span>' : '<span class="text-xs text-slate-400">Queue kosong</span>';
+    }
+    function animateSimulation(id, html, kind='add', index=-1) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const before = new Map([...el.querySelectorAll('.sim-item')].map((node,i) => [i,node.getBoundingClientRect()]));
+      el.innerHTML = html;
+      const nodes = [...el.querySelectorAll('.sim-item')];
+      nodes.forEach((node,i) => {
+        const prev = before.get(i);
+        const now = node.getBoundingClientRect();
+        if (kind === 'add' && i === nodes.length-1) node.animate([{opacity:0,transform:'translateY(-28px) scale(.65)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:550,easing:'cubic-bezier(.2,.8,.2,1)'});
+        else if (kind === 'update' && i === index) node.animate([{backgroundColor:'#fef08a',transform:'scale(1.15)'},{backgroundColor:'transparent',transform:'scale(1)'}],{duration:650});
+        else if (prev && kind === 'remove') node.animate([{transform:`translate(${prev.left-now.left}px, ${prev.top-now.top}px)`},{transform:'translate(0,0)'}],{duration:450,easing:'ease-out'});
+      });
+    }
+    function updateSimulation(kind='add', index=-1) {
+      animateSimulation('array-visual',renderArrayItems(),kind,index);
+      animateSimulation('stack-visual',renderStackItems(),kind,index);
+      animateSimulation('queue-visual',renderQueueItems(),kind,index);
+    }
+    function simMessage(id,text) { const el=document.getElementById(id); if(el) el.textContent=text; }
+     function addArrayItem() {
+       if(!arrayCapacity)return simMessage('array-message','Buat array terlebih dahulu.');
+       const i=selectedArrayIndex, v=arrayInputValue();
+       if(arrayItems[i]!==null)return simMessage('array-message',`Indeks [${i}] sudah terisi. Gunakan Edit Data.`);
+       if(!v)return simMessage('array-message','Masukkan data terlebih dahulu.');
+       arrayItems[i]=v;refreshArrayUI('update',i);
+       simMessage('array-message',`Data "${v}" berhasil dimasukkan ke indeks [${i}].`);
+     }
+     function updateArrayItem() {
+       const i=selectedArrayIndex,v=arrayInputValue();
+       if(!arrayCapacity||arrayItems[i]===null)return simMessage('array-message','Pilih indeks yang sudah terisi untuk diedit.');
+       if(!v)return simMessage('array-message','Data tidak boleh kosong. Gunakan Hapus Data untuk mengosongkan indeks.');
+       const old=arrayItems[i];arrayItems[i]=v;refreshArrayUI('update',i);
+       simMessage('array-message',`Indeks [${i}] diubah dari "${old}" menjadi "${v}".`);
+     }
+     function removeArrayItem() {
+       const i=selectedArrayIndex;
+       if(!arrayCapacity||arrayItems[i]===null)return simMessage('array-message','Pilih indeks yang sudah terisi untuk dihapus.');
+       const old=arrayItems[i];arrayItems[i]=null;
+       const input=document.getElementById('array-value');if(input)input.value='';
+       refreshArrayUI('remove',i);simMessage('array-message',`Data "${old}" pada indeks [${i}] dihapus. Indeks tersebut kini kosong dan bisa diisi kembali.`);
+     }
+    function addStackItem() {
+      if(stackItems.length>=6) return showModalAlert('Stack maksimal 6 elemen.');
+      const v=nextSimulationValue(); stackItems.push(v); updateSimulation('add'); simMessage('stack-message',`Push ${v}: masuk ke puncak Stack (LIFO).`);
+    }
+    function removeStackItem() {
+      const v=stackItems.pop(); updateSimulation('remove'); simMessage('stack-message',v?`Pop ${v}: elemen teratas keluar lebih dulu.`:'Stack kosong.');
+    }
+    function addQueueItem() {
+      if(queueItems.length>=6) return showModalAlert('Queue maksimal 6 elemen.');
+      const v=nextSimulationValue(); queueItems.push(v); updateSimulation('add'); simMessage('queue-message',`Enqueue ${v}: masuk dari belakang antrean.`);
+    }
+    function removeQueueItem() {
+      const v=queueItems.shift(); updateSimulation('remove'); simMessage('queue-message',v?`Dequeue ${v}: elemen terdepan keluar lebih dulu (FIFO).`:'Queue kosong.');
+    }
+    function resetSimulation() {
+      arrayItems=[]; stackItems=[]; queueItems=[]; simulationCounter=1;
+      updateSimulation('remove');
+      ['array-message','stack-message','queue-message'].forEach(id=>simMessage(id,'Simulasi direset. Tambahkan data untuk memulai.'));
+    }
+
+    function selectFormat(fmt) {
+      selectedFormat = fmt;
+      renderView();
+    }
+
+    function startStudying() {
+      learningStage = 2;
+      renderView();
+      startTimer(activeLevel.durationMinutes * 60, () => {
+        learningStage = 3;
+        renderView();
+      });
+    }
+
+    function finishStudyingEarly() {
+      stopTimer();
+      learningStage = 3;
+      renderView();
+    }
+
+    function blockAnswerClipboard(event) {
+      event.preventDefault();
+      showModalAlert('Menempelkan jawaban tidak diperbolehkan. Ketik jawaban sendiri atau gunakan input suara.');
+    }
+
+    function blockAnswerInsert(event) {
+      if (event.inputType === 'insertFromPaste' || event.inputType === 'insertFromDrop' || event.inputType === 'insertFromYank') event.preventDefault();
+    }
+
+    function handleTextareaChange(elem) {
+      answerInputText = elem.value;
+      updateCharCount();
+    }
+
+    function updateCharCount() {
+      const charCountElem = document.getElementById('char-count');
+      if (charCountElem) {
+        charCountElem.innerText = `Jumlah karakter: ${answerInputText.length}`;
+      }
+    }
+
+    // Concept Evaluation Logic
+    async function submitAnswer() {
+      if (learningStage !== 3 || isEvaluating) return;
+      isEvaluating = true;
+      if (isListening && recognition) { recognition.stop(); isListening = false; updateSpeechBtnUI(); }
+      if (!answerInputText.trim()) {
+        isEvaluating = false;
+        showModalAlert("Silakan ketik atau rekam jawaban Anda terlebih dahulu.");
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      if (submitBtn) {
+        submitBtn.innerText = "Memeriksa Konsep...";
+        submitBtn.disabled = true;
+      }
+
+      // Beri browser kesempatan menampilkan status tombol sebelum memproses.
+      await new Promise(resolve => setTimeout(resolve, 0));
+      try {
+      const normalizeConcept = (value) => String(value ?? '').toLowerCase().normalize('NFKC')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ').trim().replace(/\s+/g, ' ');
+      const userText = ' ' + normalizeConcept(answerInputText) + ' ';
+      const criteria = activeLevel.criteria || {};
+      let matchedConcepts = [];
+      let missingConcepts = [];
+      // Pencocokan kata utuh tanpa membuat RegExp dinamis untuk setiap konsep.
+      const containsTerm = (term) => {
+        const normalized = normalizeConcept(term);
+        return normalized.length > 0 && userText.includes(' ' + normalized + ' ');
+      };
+      (Array.isArray(criteria.mandatoryConcepts) ? criteria.mandatoryConcepts : []).forEach((concept) => {
+        const options = String(concept).split('/').map(x => x.trim()).filter(Boolean);
+        const legacySynonyms = options.flatMap(option => criteria.synonyms?.[option] || []);
+        const isPresent = [...options, ...legacySynonyms].some(containsTerm);
+        if (isPresent) matchedConcepts.push(concept);
+        else missingConcepts.push(concept);
+      });
+
+      const totalMandatory = Array.isArray(criteria.mandatoryConcepts) ? criteria.mandatoryConcepts.length : 0;
+      const matchRatio = totalMandatory > 0 ? matchedConcepts.length / totalMandatory : 1;
+      let calculatedScore = Math.round(matchRatio * 100);
+
+      {
+        const isPassed = calculatedScore >= criteria.minScore;
+        let feedbackMsg = "";
+
+        if (isPassed) {
+          feedbackMsg = `Luar biasa! Jawabannmu telah mencakup konsep utama: (${matchedConcepts.join(', ')}). Kamu berhasil menunjukkan pemahaman konsep mandiri!`;
+        } else {
+          if (attemptCountForLevel === 0) {
+            feedbackMsg = `Jawabanmu belum lengkap. Kamu belum menjelaskan konsep penting seperti: [${missingConcepts.join(', ')}]. Coba pelajari materi kembali!`;
+          } else {
+            feedbackMsg = `Hampir! Petunjuk: Pastikan kamu menyertakan kata kunci atau padanan dari ${missingConcepts.slice(0, 2).join(' dan ')}.`;
+          }
+        }
+
+        evalResult = {
+          score: calculatedScore,
+          passed: isPassed,
+          feedback: feedbackMsg,
+          matchedConcepts,
+          missingConcepts
+        };
+
+        // Simpan setiap percobaan agar guru dapat membaca jawaban asli murid.
+        submissions.push({
+          id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+          studentId: currentUser.id || 'S001',
+          studentName: currentUser.name || 'Murid Demo',
+          studentClass: currentUser.class || '-',
+          levelId: activeLevel.id,
+          levelTitle: activeLevel.title,
+          question: activeLevel.question,
+          answer: answerInputText.trim(),
+          score: calculatedScore,
+          passed: isPassed,
+          matchedConcepts: [...matchedConcepts],
+          missingConcepts: [...missingConcepts],
+          feedback: feedbackMsg,
+          submittedAt: new Date().toLocaleString('id-ID')
+        });
+        persistSubmissions();
+        const studentRecord = students.find(st => st.id === (currentUser.id || 'S001'));
+        if (studentRecord) {
+          studentRecord.attemptsCount = (studentRecord.attemptsCount || 0) + 1;
+          const passedLevels = new Set(submissions.filter(x => x.studentId === studentRecord.id && x.passed).map(x => x.levelId));
+          studentRecord.progress = Math.round((passedLevels.size / Math.max(levels.length, 1)) * 100);
+          studentRecord.currentLevel = Math.max(1, ...passedLevels);
+        }
+        attemptCountForLevel++;
+
+        if (isPassed) {
+          levels = levels.map(lvl => {
+            if (lvl.id === activeLevel.id) return { ...lvl, status: 'completed' };
+            if (lvl.id === activeLevel.id + 1 && lvl.status === 'locked') return { ...lvl, status: 'available' };
+            return lvl;
+          });
+          // Status level murid dihitung dari riwayat jawaban, bukan disimpan sebagai perubahan soal guru.
+        }
+
+        renderView();
+      }
+      } catch (error) {
+        console.error('Evaluasi konsep gagal:', error);
+        showModalAlert('Pemeriksaan konsep mengalami kendala. Silakan coba lagi.');
+        if (submitBtn && submitBtn.isConnected) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Kirim Jawaban Evaluasi';
+        }
+      } finally {
+        isEvaluating = false;
+      }
+    }
+
+    function renderEvalBox() {
+      return `
+        <div class="p-5 rounded-xl border mb-6 ${evalResult.passed ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}">
+          <div class="flex items-center space-x-2 mb-2">
+            <i data-lucide="${evalResult.passed ? 'check-circle' : 'x-circle'}" class="w-5 h-5 ${evalResult.passed ? 'text-emerald-600' : 'text-rose-600'}"></i>
+            <span class="font-bold text-sm" style="text-align: justify;">
+              ${evalResult.passed ? 'Penguasaan Konsep Terpenuhi!' : 'Jawaban Belum Memenuhi Kriteria'} (Skor: ${evalResult.score}/100)
+            </span>
+          </div>
+          <p class="text-xs leading-relaxed mb-3" style="text-align: justify;">
+            ${evalResult.feedback}
+          </p>
+
+          ${!evalResult.passed ? `
+            <button onclick="startRemediation()" class="px-4 py-2 bg-amber-600 text-white font-semibold text-xs rounded-lg hover:bg-amber-700 transition">
+              Pelajari Remediasi Materi (3 Menit)
+            </button>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function finishRemediationEarly() {
+      if (learningStage !== 4 || !activeLevel) return;
+      stopTimer();
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      answerInputText = '';
+      evalResult = null;
+      learningStage = 3;
+      renderView();
+    }
+
+    function startRemediation() {
+      if (!activeLevel) return;
+      if (isListening && recognition) { recognition.stop(); isListening = false; }
+      answerInputText = '';
+      evalResult = null;
+      stopTimer();
+      learningStage = 4;
+      renderView();
+      startTimer((Number(activeLevel.remediationDurationMinutes) || 3) * 60, () => {
+        answerInputText = '';
+        evalResult = null;
+        learningStage = 3;
+        renderView();
+      });
+    }
+
+    // ------------------------------------------
+    // TEACHER VIEW SUB-COMPONENTS
+    // ------------------------------------------
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    function renderRecentSubmissions() {
+      if (!submissions.length) return '<p class="text-sm text-slate-500 p-4 bg-slate-50 rounded-lg">Belum ada jawaban yang dikirim murid.</p>';
+      return `<div class="space-y-3">${[...submissions].reverse().slice(0, 8).map(s => `
+        <div class="border border-slate-200 rounded-xl p-4">
+          <div class="flex flex-wrap justify-between gap-2 mb-2">
+            <div><strong class="text-sm text-slate-800">${escapeHTML(s.studentName)}</strong><span class="text-xs text-slate-500 ml-2">${escapeHTML(s.studentId)} · ${escapeHTML(s.studentClass)}</span></div>
+            <span class="text-xs font-bold ${s.passed ? 'text-emerald-700' : 'text-rose-700'}">${s.score}/100 · ${s.passed ? 'Lulus' : 'Perlu remediasi'}</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-1">${escapeHTML(s.levelTitle)} · ${escapeHTML(s.submittedAt)}</p>
+          <p class="text-sm font-semibold text-slate-700 mb-1">${escapeHTML(s.question)}</p>
+          <p class="text-sm text-slate-700 whitespace-pre-wrap">${escapeHTML(s.answer)}</p>
+          <p class="text-xs mt-2"><span class="font-semibold text-emerald-700">Terpenuhi:</span> ${escapeHTML((s.matchedConcepts || []).join(', ') || 'Tidak ada')} <span class="font-semibold text-rose-700 ml-2">Belum:</span> ${escapeHTML((s.missingConcepts || []).join(', ') || 'Tidak ada')}</p>
+        </div>`).join('')}</div>`;
+    }
+
+    function showStudentAnswers(studentId) {
+      const st = students.find(s => s.id === studentId);
+      const rows = submissions.filter(s => s.studentId === studentId).slice().reverse();
+      const content = rows.length ? rows.map(s =>
+        `${s.submittedAt}\\n${s.levelTitle}\\nSoal: ${s.question}\\nJawaban: ${s.answer}\\nSkor: ${s.score}/100 (${s.passed ? 'Lulus' : 'Belum lulus'})\\nKonsep terpenuhi: ${(s.matchedConcepts || []).join(', ') || '-'}\\nKonsep belum terpenuhi: ${(s.missingConcepts || []).join(', ') || '-'}`
+      ).join('\\n\\n--------------------\\n\\n') : 'Belum ada jawaban tersimpan untuk murid ini.';
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4';
+      modal.innerHTML = `<div class="bg-white rounded-2xl p-6 max-w-2xl w-full max-h-[85vh] overflow-auto shadow-xl">
+        <div class="flex items-center justify-between mb-4"><h3 class="font-bold text-lg">Jawaban ${escapeHTML(st ? st.name : studentId)}</h3><button class="text-slate-500 text-xl" onclick="this.closest('.fixed').remove()">×</button></div>
+        <div class="space-y-4">${rows.length ? rows.map(s => `<article class="border rounded-xl p-4">
+          <p class="text-xs text-slate-500 mb-2">${escapeHTML(s.submittedAt)} · ${escapeHTML(s.levelTitle)}</p>
+          <p class="font-semibold text-sm mb-2">${escapeHTML(s.question)}</p>
+          <p class="text-sm whitespace-pre-wrap bg-slate-50 rounded-lg p-3">${escapeHTML(s.answer)}</p>
+          <p class="text-sm mt-2">Skor: <b>${s.score}/100</b> — ${s.passed ? 'Lulus' : 'Belum lulus'}</p>
+          <p class="text-xs mt-1">Konsep terpenuhi: ${escapeHTML((s.matchedConcepts || []).join(', ') || '-')}</p>
+          <p class="text-xs text-rose-700">Konsep belum terpenuhi: ${escapeHTML((s.missingConcepts || []).join(', ') || '-')}</p>
+          <p class="text-xs text-slate-500 mt-1">${escapeHTML(s.feedback)}</p>
+        </article>`).join('') : '<p class="text-sm text-slate-500">Belum ada jawaban tersimpan untuk murid ini.</p>'}</div>
+        <button onclick="this.closest('.fixed').remove()" class="mt-5 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm">Tutup</button>
+      </div>`;
+      document.body.appendChild(modal);
+    }
+
+    // Editor materi: format daftar dan perataan paragraf, disimpan sebagai HTML aman.
+    function materialHTML(value) {
+      const raw = String(value || '');
+      if (!/<\/?(?:p|div|ul|ol|li|br)\b/i.test(raw)) return raw.split('\n').map(x => '<p>' + escapeHTML(x) + '</p>').join('');
+      const doc = new DOMParser().parseFromString(raw, 'text/html');
+      const allowed = new Set(['P','DIV','BR','UL','OL','LI','B','STRONG','I','EM','U']);
+      function clean(node) {
+        if (node.nodeType === Node.TEXT_NODE) return escapeHTML(node.textContent);
+        if (node.nodeType !== Node.ELEMENT_NODE) return '';
+        const children = Array.from(node.childNodes).map(clean).join('');
+        if (!allowed.has(node.tagName)) return children;
+        const tag = node.tagName.toLowerCase();
+        if (tag === 'br') return '<br>';
+        const align = (node.style.textAlign || node.getAttribute('align') || '').toLowerCase();
+        const style = ['left','right','center','justify'].includes(align) ? ' style="text-align:' + align + '"' : '';
+        return '<' + tag + style + '>' + children + '</' + tag + '>';
+      }
+      return Array.from(doc.body.childNodes).map(clean).join('');
+    }
+    function materialPlainText(value) {
+      const div = document.createElement('div');
+      div.innerHTML = materialHTML(value);
+      return div.innerText || div.textContent || '';
+    }
+    function formatMaterial(command) {
+      const editor = document.getElementById('material-rich-editor');
+      if (!editor) return;
+      editor.focus();
+      document.execCommand(command, false, null);
+    }
+    function insertMaterialPlainText(event) {
+      event.preventDefault();
+      const text = (event.clipboardData || window.clipboardData).getData('text/plain');
+      document.execCommand('insertText', false, text);
+    }
+    function materialListStyle() { return ''; }
+
+    function openQuestionForm(id = null) {
+      const existing = id === null ? null : levels.find(x => Number(x.id) === Number(id));
+      if (id !== null && !existing) return;
+
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-3 sm:p-6';
+      modal.innerHTML = `
+        <section role="dialog" aria-modal="true" aria-labelledby="question-form-title"
+          class="bg-white rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden shadow-2xl flex flex-col">
+          <header class="px-5 sm:px-7 py-5 border-b border-slate-200 flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-1">Panel Guru</p>
+              <h2 id="question-form-title" class="text-xl font-bold text-slate-900">${existing ? 'Edit soal pembelajaran' : 'Tambah soal baru'}</h2>
+              <p class="text-sm text-slate-500 mt-1">Lengkapi informasi soal dan konsep yang wajib muncul pada jawaban siswa.</p>
+            </div>
+            <button type="button" data-close-form aria-label="Tutup formulir" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 text-2xl leading-none">×</button>
+          </header>
+          <form id="question-editor-form" class="p-5 sm:p-7 overflow-y-auto space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label class="block sm:col-span-2">
+                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Judul level / soal <span class="text-rose-600">*</span></span>
+                <input name="title" required maxlength="120" value="${escapeHTML(existing?.title || '')}" placeholder="Contoh: Memahami Variabel"
+                  class="w-full rounded-xl border border-slate-300 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+              </label>
+              <label class="block sm:col-span-2">
+                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Pertanyaan untuk siswa <span class="text-rose-600">*</span></span>
+                <textarea name="question" required rows="3" placeholder="Tuliskan pertanyaan atau instruksi yang akan dikerjakan siswa..."
+                  class="w-full rounded-xl border border-slate-300 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">${escapeHTML(existing?.question || '')}</textarea>
+              </label>
+              <label class="block sm:col-span-2">
+                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Tujuan pembelajaran</span>
+                <textarea name="objective" rows="2" placeholder="Apa yang diharapkan dikuasai siswa?"
+                  class="w-full rounded-xl border border-slate-300 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">${escapeHTML(existing?.objective || 'Murid mampu menjelaskan konsep dengan kata-katanya sendiri.')}</textarea>
+              </label>
+              <label class="block sm:col-span-2">
+                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Materi pembelajaran</span>
+                <div class="rounded-xl border border-slate-300 overflow-hidden">
+                  <div class="flex flex-wrap gap-1.5 p-2 bg-slate-50 border-b border-slate-200" role="toolbar" aria-label="Format materi">
+                    <button type="button" onmousedown="event.preventDefault()" onclick="formatMaterial('insertUnorderedList')" title="Daftar bullet" class="px-3 py-2 bg-white border rounded-lg text-sm font-semibold">• Bullet</button>
+                    <button type="button" onmousedown="event.preventDefault()" onclick="formatMaterial('insertOrderedList')" title="Daftar nomor" class="px-3 py-2 bg-white border rounded-lg text-sm font-semibold">1. Number</button>
+                    <span class="border-l border-slate-300 mx-1"></span>
+                    <button type="button" onmousedown="event.preventDefault()" onclick="formatMaterial('justifyLeft')" title="Rata kiri" class="px-3 py-2 bg-white border rounded-lg text-sm">☰ Kiri</button>
+                    <button type="button" onmousedown="event.preventDefault()" onclick="formatMaterial('justifyCenter')" title="Rata tengah" class="px-3 py-2 bg-white border rounded-lg text-sm">≡ Tengah</button>
+                    <button type="button" onmousedown="event.preventDefault()" onclick="formatMaterial('justifyRight')" title="Rata kanan" class="px-3 py-2 bg-white border rounded-lg text-sm">☷ Kanan</button>
+                    <button type="button" onmousedown="event.preventDefault()" onclick="formatMaterial('justifyFull')" title="Rata kanan kiri" class="px-3 py-2 bg-white border rounded-lg text-sm">▤ Justify</button>
+                  </div>
+                  <div id="material-rich-editor" contenteditable="true" role="textbox" aria-label="Materi pembelajaran" aria-multiline="true" onpaste="insertMaterialPlainText(event)" class="material-rich-editor min-h-48 max-h-96 overflow-y-auto px-4 py-3 text-sm leading-7 outline-none focus:bg-indigo-50/20">${materialHTML(existing?.textMaterial || '')}</div>
+                </div>
+                <span class="block text-xs text-slate-500 mt-1">Blok teks atau tempatkan kursor pada paragraf, lalu pilih daftar atau perataan. Tekan Enter untuk paragraf baru.</span>
+              </label>
+              <label class="block sm:col-span-2">
+                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Konsep wajib / kata kunci <span class="text-rose-600">*</span></span>
+                <textarea name="concepts" required rows="3" placeholder="Contoh: menyimpan/menampung, mengorganisasi/mengelola/mengatur, komputer, efisien/optimal"
+                  class="w-full rounded-xl border border-slate-300 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">${escapeHTML(existing?.criteria?.mandatoryConcepts?.join(', ') || '')}</textarea>
+                <span class="block text-xs text-slate-500 mt-1.5">Pisahkan konsep wajib dengan koma (DAN). Gunakan / untuk alternatif istilah (ATAU). Contoh: mengorganisasi/mengelola/mengatur, menyimpan/menampung. Setiap kelompok alternatif dihitung sebagai satu konsep.</span>
+              </label>
+              <label class="block">
+                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Batas nilai kelulusan (%)</span>
+                <input name="minScore" type="number" min="0" max="100" step="1" value="${Number(existing?.criteria?.minScore ?? 75)}"
+                  class="w-full rounded-xl border border-slate-300 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                <span class="block text-xs text-slate-500 mt-1.5">Rentang nilai 0–100.</span>
+              </label>
+            </div>
+            <p id="question-form-error" role="alert" class="hidden rounded-lg bg-rose-50 border border-rose-200 px-3 py-2 text-sm text-rose-700"></p>
+            <footer class="pt-4 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
+              <button type="button" data-close-form class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-semibold hover:bg-slate-50">Batal</button>
+              <button type="submit" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">${existing ? 'Simpan perubahan' : 'Simpan soal'}</button>
+            </footer>
+          </form>
+        </section>`;
+      document.body.appendChild(modal);
+
+      const close = () => modal.remove();
+      modal.querySelectorAll('[data-close-form]').forEach(button => button.addEventListener('click', close));
+      modal.addEventListener('click', event => { if (event.target === modal) close(); });
+      modal.querySelector('[name="title"]').focus();
+
+      modal.querySelector('#question-editor-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const data = new FormData(form);
+        const title = String(data.get('title') || '').trim();
+        const question = String(data.get('question') || '').trim();
+        const objective = String(data.get('objective') || '').trim();
+        const material = materialHTML(modal.querySelector('#material-rich-editor').innerHTML.trim());
+        const concepts = [...new Set(String(data.get('concepts') || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean))];
+        const scoreRaw = String(data.get('minScore') ?? '75');
+        const score = Number(scoreRaw);
+        const error = modal.querySelector('#question-form-error');
+
+        let message = '';
+        if (!title) message = 'Judul soal wajib diisi.';
+        else if (!question) message = 'Pertanyaan untuk siswa wajib diisi.';
+        else if (!concepts.length) message = 'Masukkan minimal satu konsep wajib atau kata kunci.';
+        else if (scoreRaw.trim() === '' || !Number.isFinite(score) || score < 0 || score > 100) message = 'Batas nilai harus berupa angka antara 0 sampai 100.';
+
+        if (message) {
+          error.textContent = message;
+          error.classList.remove('hidden');
+          return;
+        }
+
+        if (existing) {
+          existing.title = title;
+          existing.question = question;
+          existing.objective = objective;
+          existing.textMaterial = material;
+          existing.audioTranscript = material;
+          existing.criteria = existing.criteria || {};
+          existing.criteria.mandatoryConcepts = concepts;
+          existing.criteria.synonyms = {};
+          existing.criteria.minScore = score;
+          existing.criteria.rubricHint = 'Pastikan jawaban mencakup konsep wajib.';
+          if (activeLevel && Number(activeLevel.id) === Number(existing.id)) activeLevel = existing;
+        } else {
+          const nextId = levels.length ? Math.max(...levels.map(x => Number(x.id) || 0)) + 1 : 1;
+          levels.push({
+            id: nextId, title, objective, durationMinutes: 5, remediationDurationMinutes: 3,
+            status: levels.length ? 'locked' : 'available', textMaterial: material, audioTranscript: material,
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', question,
+            criteria: { mandatoryConcepts: concepts, synonyms: {}, minScore: score, rubricHint: 'Pastikan jawaban mencakup konsep wajib.' },
+            remediationMaterial: 'Pelajari kembali materi dan pastikan semua konsep wajib dijelaskan.'
+          });
+        }
+
+        persistLevels();
+        close();
+        renderView();
+        showModalAlert(existing ? 'Soal berhasil diperbarui. Perubahan digunakan pada sesi siswa berikutnya.' : 'Soal berhasil ditambahkan ke daftar level siswa.');
+      });
+    }
+
+    function addQuestion() {
+      openQuestionForm();
+    }
+
+    function editQuestion(id) {
+      openQuestionForm(id);
+    }
+
+    function deleteQuestion(id) {
+      const lvl = levels.find(x => Number(x.id) === Number(id));
+      if (!lvl) return;
+
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4';
+      modal.innerHTML = `
+        <section role="dialog" aria-modal="true" aria-labelledby="delete-question-title" class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div class="w-11 h-11 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4"><i data-lucide="trash-2" class="w-5 h-5"></i></div>
+          <h2 id="delete-question-title" class="text-lg font-bold text-slate-900 mb-2">Hapus soal?</h2>
+          <p class="text-sm text-slate-600 mb-6">Soal <strong>${escapeHTML(lvl.title)}</strong> akan dihapus dari daftar level siswa. Tindakan ini tidak dapat dibatalkan.</p>
+          <div class="flex justify-end gap-2">
+            <button type="button" data-cancel-delete class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-semibold">Batal</button>
+            <button type="button" data-confirm-delete class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold">Ya, hapus soal</button>
+          </div>
+        </section>`;
+      document.body.appendChild(modal);
+      const close = () => modal.remove();
+      modal.querySelector('[data-cancel-delete]').addEventListener('click', close);
+      modal.addEventListener('click', event => { if (event.target === modal) close(); });
+      modal.querySelector('[data-confirm-delete]').addEventListener('click', () => {
+        levels = levels.filter(item => Number(item.id) !== Number(id));
+        levels.forEach((item, index) => { item.id = index + 1; if (index === 0 && item.status === 'locked') item.status = 'available'; });
+        persistLevels();
+        if (activeLevel && Number(activeLevel.id) === Number(id)) { activeLevel = null; stopTimer(); }
+        close();
+        renderView();
+        showModalAlert('Soal berhasil dihapus dari daftar siswa.');
+      });
+      lucide.createIcons();
+    }
+
+    function teacherTabs() {
+      return `<nav class="flex flex-wrap gap-2 mb-6" aria-label="Menu guru">${[
+        ['teacher-dash','Ringkasan'],['teacher-progress','Rekapitulasi Progres Siswa'],
+        ['teacher-answers','Jawaban Murid'],['teacher-questions','Kelola Soal & Konsep Wajib']
+      ].map(([route,label])=>`<button onclick="navigateTo('${route}')" class="px-4 py-2.5 rounded-xl text-sm font-semibold ${currentRoute===route?'bg-indigo-600 text-white':'bg-white border border-slate-200 text-slate-700 hover:bg-indigo-50'}">${label}</button>`).join('')}</nav>`;
+    }
+    function teacherAnswerList() {
+      const all = [...students];
+      submissions.forEach(s=>{if(!all.some(st=>String(st.id)===String(s.studentId)))all.push({id:s.studentId,name:s.studentName,class:s.studentClass});});
+      return `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">${all.map(st=>{
+        const rows=submissions.filter(s=>String(s.studentId)===String(st.id));
+        return `<button onclick="openStudentLevels(decodeURIComponent('${encodeURIComponent(String(st.id))}'))" class="text-left bg-white border border-slate-200 rounded-2xl p-5 hover:border-indigo-400 hover:shadow-md transition"><div class="font-bold text-slate-900">${escapeHTML(st.name)}</div><div class="text-xs text-slate-500 mt-1">${escapeHTML(st.id)} · ${escapeHTML(st.class||'-')}</div><div class="mt-4 text-sm text-indigo-700 font-semibold">${rows.length} percobaan · ${new Set(rows.map(r=>String(r.levelId))).size} level dikerjakan →</div></button>`;
+      }).join('')}</div>`;
+    }
+    function openStudentLevels(id) {
+      const st=students.find(x=>String(x.id)===String(id)) || submissions.find(x=>String(x.studentId)===String(id));
+      const rows=submissions.filter(x=>String(x.studentId)===String(id));
+      const modal=document.createElement('div');modal.className='fixed inset-0 z-50 bg-black/50 p-4 flex items-center justify-center';
+      modal.innerHTML=`<section class="bg-white rounded-2xl p-6 w-full max-w-3xl max-h-[90vh] overflow-auto"><div class="flex justify-between items-center mb-5"><div><h2 class="text-xl font-bold">${escapeHTML(st?.name||st?.studentName||id)}</h2><p class="text-sm text-slate-500">Riwayat berdasarkan level</p></div><button data-close class="text-2xl">×</button></div><div class="space-y-3">${levels.map(l=>{
+        const attempts=rows.filter(r=>String(r.levelId)===String(l.id));
+        const firstPass=attempts.findIndex(r=>r.passed);
+        const untilPass=firstPass>=0?firstPass+1:null;
+        return `<details class="border rounded-xl p-4"><summary class="cursor-pointer font-semibold text-slate-800">${escapeHTML(l.title)} <span class="block text-xs font-normal text-slate-500 mt-1">${attempts.length} percobaan · ${untilPass!==null?'Lulus pada percobaan ke-'+untilPass:'Belum lulus'}${attempts.length>untilPass&&untilPass!==null?' · '+(attempts.length-untilPass)+' percobaan ulang':''}</span></summary><div class="space-y-3 mt-4">${attempts.length?attempts.map((r,i)=>`<article class="bg-slate-50 rounded-xl p-4 text-sm"><div class="font-semibold mb-2">Percobaan ${i+1} · ${escapeHTML(r.submittedAt)} · Skor ${Number(r.score)||0}/100 · ${r.passed?'Lulus':'Belum lulus'}</div><p class="font-semibold">${escapeHTML(r.question)}</p><p class="whitespace-pre-wrap mt-2">${escapeHTML(r.answer)}</p><p class="mt-2 text-emerald-700">Konsep terpenuhi: ${escapeHTML((r.matchedConcepts||[]).join(', ')||'-')}</p><p class="text-rose-700">Konsep belum terpenuhi: ${escapeHTML((r.missingConcepts||[]).join(', ')||'-')}</p><p class="mt-2 text-slate-600">${escapeHTML(r.feedback||'')}</p></article>`).join(''):'<p class="text-sm text-slate-500">Belum ada jawaban.</p>'}</div></details>`;
+      }).join('')}</div></section>`;
+      document.body.appendChild(modal);modal.querySelector('[data-close]').onclick=()=>modal.remove();modal.addEventListener('click',e=>{if(e.target===modal)modal.remove();});
+    }
+    function renderTeacherDashboard(container) {
+      const pageTitle={'teacher-dash':'Ringkasan Kelas','teacher-progress':'Rekapitulasi Progres Siswa','teacher-answers':'Jawaban Murid Berdasarkan Level','teacher-questions':'Kelola Soal & Konsep Wajib'}[currentRoute]||'Dashboard Guru';
+      container.innerHTML=`<div class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8"><h1 class="text-2xl font-extrabold text-slate-900 mb-5">${pageTitle}</h1>${teacherTabs()}
+      ${currentRoute==='teacher-dash'?`          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-500">Total Siswa</span>
+                <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i>
+              </div>
+              <span class="text-2xl font-bold text-slate-900">${students.length}</span>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-500">Total Level</span>
+                <i data-lucide="layers" class="w-4 h-4 text-blue-600"></i>
+              </div>
+              <span class="text-2xl font-bold text-slate-900">${levels.length}</span>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-500">Rata-rata Skor</span>
+                <i data-lucide="bar-chart-2" class="w-4 h-4 text-emerald-600"></i>
+              </div>
+              <span class="text-2xl font-bold text-slate-900">82.5%</span>
+            </div>
+          </div>
+
+<div class="mt-6 grid md:grid-cols-3 gap-4">${[['teacher-progress','Lihat Progres Siswa'],['teacher-answers','Lihat Jawaban Murid'],['teacher-questions','Kelola Soal']].map(([r,t])=>`<button onclick="navigateTo('${r}')" class="p-6 rounded-xl bg-white border text-indigo-700 font-bold text-left hover:border-indigo-400">${t} →</button>`).join('')}</div>`:''}
+      ${currentRoute==='teacher-progress'?`          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200 flex items-center justify-between">
+              <div>
+                <h3 class="font-bold text-slate-900">Rekapitulasi Progres Siswa</h3>
+                <p class="text-xs text-slate-500">Pemantauan tingkat penguasaan konsep per kelas</p>
+              </div>
+              <button onclick="showModalAlert('Mengunduh laporan CSV siswa...')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg flex items-center space-x-2">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>Ekspor Laporan CSV</span>
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm text-slate-600">
+                <thead class="bg-slate-50 text-xs text-slate-700 uppercase font-semibold">
+                  <tr>
+                    <th class="p-4">NIS & Nama</th>
+                    <th class="p-4">Kelas</th>
+                    <th class="p-4">Level Tertinggi</th>
+                    <th class="p-4">Progres</th>
+                    <th class="p-4">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  ${students.map(st => `
+                    <tr class="hover:bg-slate-50/50">
+                      <td class="p-4 font-semibold text-slate-800">
+                        ${st.name} <span class="text-xs text-slate-400 block font-normal">${st.id}</span>
+                      </td>
+                      <td class="p-4">${st.class}</td>
+                      <td class="p-4">Level ${st.currentLevel}</td>
+                      <td class="p-4">
+                        <div class="w-32 bg-slate-200 rounded-full h-2 overflow-hidden">
+                          <div class="bg-indigo-600 h-2 rounded-full" style="width: ${st.progress}%"></div>
+                        </div>
+                        <span class="text-xs text-slate-500 mt-1 block">${st.progress}%</span>
+                      </td>
+                      <td class="p-4">
+                        <button onclick="showStudentAnswers('${st.id}')" class="text-xs text-indigo-600 hover:underline font-semibold">
+                          Lihat Jawaban (${submissions.filter(x => x.studentId === st.id).length})
+                        </button>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+`:''}
+      ${currentRoute==='teacher-answers'?teacherAnswerList():''}
+      ${currentRoute==='teacher-questions'?`          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <div>
+                <h3 class="font-bold text-slate-900">Kelola Soal & Konsep Wajib</h3>
+                <p class="text-xs text-slate-500 mt-1">Tambah, edit, atau hapus soal. Perubahan langsung digunakan pada sesi murid di browser ini. Data demo tersimpan di browser yang sama.</p>
+              </div>
+              <button onclick="addQuestion()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg">+ Tambah Soal</button>
+            </div>
+            <div class="space-y-4">
+              ${levels.map(lvl => `
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-2">
+                    <div class="min-w-0 flex-1">
+                      <span class="font-bold text-sm text-slate-800">${escapeHTML(lvl.title)}</span>
+                      <span class="block text-xs text-slate-500 mt-1">Batas Nilai: ${Number(lvl.criteria?.minScore ?? 75)}%</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 shrink-0">
+                      <button type="button" onclick="editQuestion(${Number(lvl.id)})" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-indigo-200 bg-white text-indigo-700 hover:bg-indigo-50 text-xs font-semibold" aria-label="Edit soal ${escapeHTML(lvl.title)}">
+                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit
+                      </button>
+                      <button type="button" onclick="deleteQuestion(${Number(lvl.id)})" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-rose-200 bg-white text-rose-700 hover:bg-rose-50 text-xs font-semibold" aria-label="Hapus soal ${escapeHTML(lvl.title)}">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Hapus
+                      </button>
+                    </div>
+                  </div>
+                  <p class="text-xs text-slate-600 mb-3 whitespace-pre-wrap">${escapeHTML(lvl.question || '')}</p>
+                  <div class="flex flex-wrap gap-2 text-xs">
+                    <span class="font-semibold text-slate-700">Konsep Wajib:</span>
+                    ${(lvl.criteria?.mandatoryConcepts || []).map(c => `<span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded">${escapeHTML(c)}</span>`).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+`:''}
+      </div>`;
+    }
+
+
+    // Initialize application navigation on load
+    window.onload = () => {
+      renderNav();
+      renderView();
+    };
+  </script>
+
+<script>
+/* Visual-only button icon enhancement: labels and functionality remain unchanged. */
+(function () {
+  const rules = [
+    [/masuk|login|mulai belajar/i, 'log-in'],
+    [/keluar|logout/i, 'log-out'],
+    [/kembali/i, 'arrow-left'],
+    [/kirim jawaban|submit|evaluasi/i, 'send'],
+    [/mulai level|mulai/i, 'play'],
+    [/pelajari ulang/i, 'rotate-ccw'],
+    [/terkunci/i, 'lock'],
+    [/buat array/i, 'layers'],
+    [/isi indeks|enqueue|push/i, 'plus-circle'],
+    [/edit data|ubah/i, 'pencil'],
+    [/hapus data|dequeue|pop/i, 'trash-2'],
+    [/reset/i, 'rotate-ccw'],
+    [/putar narasi|dengarkan materi/i, 'volume-2'],
+    [/berhenti/i, 'square'],
+    [/input suara|merekam/i, 'mic'],
+    [/saya sudah paham|lanjut menjawab/i, 'arrow-right-circle'],
+    [/tutup/i, 'x'],
+    [/sinkron|refresh/i, 'refresh-cw'],
+    [/simpan/i, 'save'],
+    [/tambah|buat|tambahkan/i, 'plus'],
+    [/hapus|delete/i, 'trash-2'],
+    [/edit|ubah/i, 'pencil'],
+    [/cari|search/i, 'search'],
+    [/lihat|detail/i, 'eye'],
+    [/tambah level|level/i, 'layers'],
+    [/guru/i, 'graduation-cap'],
+    [/murid|siswa/i, 'user-round'],
+    [/lanjut|berikutnya/i, 'arrow-right'],
+    [/kirim|submit/i, 'send']
+  ];
+  function decorateButtons(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('button').forEach(btn => {
+      if (btn.querySelector('.btn-icon') || btn.querySelector('svg, i[data-lucide]')) return;
+      const label = (btn.innerText || btn.getAttribute('aria-label') || btn.title || '').trim();
+      if (!label) return;
+      const match = rules.find(([pattern]) => pattern.test(label));
+      if (!match) return;
+      const icon = document.createElement('i');
+      icon.setAttribute('data-lucide', match[1]);
+      icon.className = 'btn-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      btn.insertBefore(icon, btn.firstChild);
+    });
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      window.lucide.createIcons();
+    }
+  }
+  let scheduled = false;
+  const observer = new MutationObserver(() => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      decorateButtons(document);
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    decorateButtons(document);
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+
+</body>
+</html>
